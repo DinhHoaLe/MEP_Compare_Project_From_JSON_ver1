@@ -9,13 +9,15 @@ namespace BimComparison
             var panel=app.CreateRibbonPanel("BIM Model Comparison");
             Add(panel,"ExportJson","Export Model\nJSON",typeof(Commands.ExportJsonCommand));
             Add(panel,"CompareModels","Compare RVT\nModels",typeof(Commands.CompareModelsCommand));
+            Add(panel,"HighlightChanges","Highlight\nChanges",typeof(Commands.HighlightChangesCommand));
             Add(panel,"ExportReport","Export Comparison\nReport",typeof(Commands.ExportReportCommand));
+            Add(panel,"ClearHighlights","Clear\nHighlights",typeof(Commands.ClearHighlightsCommand));
             return Result.Succeeded;
         }
         private static void Add(RibbonPanel panel,string id,string text,System.Type command)
         {
             var button=new PushButtonData(id,text,Assembly.GetExecutingAssembly().Location,command.FullName);
-            if(command!=typeof(Commands.ExportJsonCommand)) button.AvailabilityClassName=typeof(Commands.JsonCommandAvailability).FullName;
+            if(command==typeof(Commands.CompareModelsCommand)||command==typeof(Commands.ExportReportCommand)) button.AvailabilityClassName=typeof(Commands.JsonCommandAvailability).FullName;
             panel.AddItem(button);
         }
         public Result OnShutdown(UIControlledApplication app)=>Result.Succeeded;

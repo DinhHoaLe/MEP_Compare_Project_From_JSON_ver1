@@ -6,6 +6,7 @@ using System.Windows;
 using Autodesk.Revit.UI;
 using BimComparison.Core;
 using BimComparison.Extraction;
+using BimComparison.Visualization;
 using Microsoft.Win32;
 namespace BimComparison.UI
 {
@@ -19,6 +20,10 @@ namespace BimComparison.UI
             this.app=app; InitializeComponent();DataContext=vm;
             vm.ModelB=app.ActiveUIDocument?.Document.PathName??"No active model — JSON comparison is available";
             vm.Status=export?"Choose categories, then Export active model JSON.":"Choose RVT A or two JSON snapshots.";
+            if(!export&&Session.LastReport!=null)
+            {
+                vm.ModelA=Session.LastReport.ModelA;vm.ModelB=Session.LastReport.ModelB;vm.Display(Session.LastReport);
+            }
             Closing+=(s,e)=>{if(cancellation!=null){cancellation.Cancel();e.Cancel=true;}};
         }
         private void Error(Exception ex) {vm.Status="Failed: "+ex.Message;MessageBox.Show(this,ex.Message,"BIM Model Comparison",MessageBoxButton.OK,MessageBoxImage.Error);}
@@ -76,6 +81,36 @@ namespace BimComparison.UI
             catch(Exception ex){Error(ex);}
         }
         private void SelectElement(object sender,RoutedEventArgs e)=>Navigate(false);
+        private void HighlightAll(object sender,RoutedEventArgs e)
+        {
+            try
+            {
+                var report=Session.LastReport??throw new InvalidOperationException("Compare models first.");
+                vm.Status=new HighlightService().Apply(app,report,ComparisonReportService.All(report),vm.ClassifyHighlightColors,true).Message;
+            }
+            catch(Exception ex){Error(ex);}
+        }
+        private void HighlightSelected(object sender,RoutedEventArgs e)
+        {
+            try
+            {
+                var row=Results.SelectedItem as ResultRow??throw new InvalidOperationException("Select a result row.");
+                if(row.Status=="Deleted")throw new InvalidOperationException("Deleted elements no longer exist in Model B. Use the source model/report to inspect them.");
+                if(row.Status=="Unchanged")throw new InvalidOperationException("Unchanged elements are not highlighted.");
+                vm.Status=new HighlightService().Apply(app,Session.LastReport,new[]{row.Result},vm.ClassifyHighlightColors,false).Message;
+            }
+            catch(Exception ex){Error(ex);}
+        }
+        private void ClearHighlights(object sender,RoutedEventArgs e)
+        {
+            try
+            {
+                var result=new HighlightService().Clear(app);
+                vm.Status=$"Restored {result.Restored} original overrides in the active view; {result.Missing} elements no longer exist.";
+            }
+            catch(Exception ex){Error(ex);}
+        }
+        private void InspectView(object sender,RoutedEventArgs e)=>Close();
         private void ZoomElement(object sender,RoutedEventArgs e)=>Navigate(true);
         private void Navigate(bool zoom)
         {

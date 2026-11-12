@@ -1,6 +1,6 @@
-# BIM Model Comparison — Phase 2
+# BIM Model Comparison — Phase 3
 
-Add-in cho **Autodesk Revit 2023**, C#, **.NET Framework 4.8**, WPF, Windows x64. Phase 2 bổ sung geometry, MEP systems/dimensions và connectors vào bộ so sánh Phase 1. Chưa có Highlight/Clear của Phase 3.
+Add-in cho **Autodesk Revit 2023**, C#, **.NET Framework 4.8**, WPF, Windows x64. Phase 3 bổ sung highlight thay đổi trong active view và khôi phục đầy đủ original element overrides. Geometry, MEP systems/dimensions và connectors của Phase 2 vẫn được giữ.
 
 ## Build và cài đặt
 
@@ -14,7 +14,7 @@ References dùng `RevitAPI.dll`, `RevitAPIUI.dll` và `Newtonsoft.Json.dll` đi 
 
 DLL mới: `bin\Release\net48\MEP_Compare_Project_From_JSON_ver1.dll`. Với Add-In Manager, load DLL này rồi chạy **BimComparison.Commands.CompareModelsCommand**. Nếu DLL cũ vẫn trong bộ nhớ, khởi động lại Revit trước khi nạp bản mới.
 
-Cài Ribbon cố định: đóng Revit rồi chạy `Install.ps1`. Script chép DLL vào `%APPDATA%\Autodesk\Revit\Addins\2023\BIMModelComparison` và tạo manifest có assembly path tuyệt đối. Mở lại Revit; panel **BIM Model Comparison** trong tab Add-Ins có Export Model JSON, Compare RVT Models, Export Comparison Report. Chưa tự chạy installer trong quá trình phát triển. Gỡ cài đặt khi Revit đóng bằng cách xóa manifest `BIMModelComparison.addin` và thư mục cài đặt đó.
+Cài Ribbon cố định: đóng Revit rồi chạy `Install.ps1`. Script chép DLL vào `%APPDATA%\Autodesk\Revit\Addins\2023\BIMModelComparison` và tạo manifest có assembly path tuyệt đối. Mở lại Revit; panel **BIM Model Comparison** trong tab Add-Ins có Export Model JSON, Compare RVT Models, Highlight Changes, Export Comparison Report và Clear Highlights. Chưa tự chạy installer trong quá trình phát triển. Gỡ cài đặt khi Revit đóng bằng cách xóa manifest `BIMModelComparison.addin` và thư mục cài đặt đó.
 
 ## Sử dụng Phase 2
 
@@ -75,7 +75,12 @@ Generic element không có ConnectorManager ghi `NotApplicable`, khác với ext
 ```text
 App.cs                         Ribbon + session result
 Commands/Commands.cs           Compare, Export JSON, Export Report, availability
+Commands/HighlightCommands.cs  Highlight/Clear Ribbon commands
+Commands/ValidateHighlightsCommand.cs Optional reversible Revit integration test
 Core/Models.cs                 Schema 1/2 DTOs, settings, reports
+Core/HighlightPalette.cs        Status/classification colors
+Visualization/HighlightService.cs Transactional overrides + persistent recovery ledger
+Visualization/OverrideState.cs All editable Revit 2023 override properties
 Core/ModelComparisonEngine.cs   Identity/parameters/location + scope validation
 Core/GeometryComparison.cs     Canonical fingerprint, tolerant shape matching
 Core/AdvancedComparison.cs     Geometry/MEP/connector comparisons, validation
@@ -90,6 +95,7 @@ UI/ComparisonWindow.xaml.cs     API/dialog orchestration
 UI/ComparisonViewModel.cs       Filtering, sorting, settings, result projection
 Tests/Program.cs                Phase 1 tests + Phase 2 entry
 Tests/Phase2Tests.cs             Advanced comparison tests
+Tests/Phase3Tests.cs             Color policy tests
 Tests/UiRegression.cs           WPF view regression and Phase 2 settings
 Samples/Phase2/                 Synthetic geometry/MEP/connector snapshots and report
 BIMModelComparison.addin
@@ -106,4 +112,39 @@ dotnet build .\Tests\UiRegression.csproj -c Release -m:1 -p:UseSharedCompilation
 .\Tests\bin\Release\net48\UiRegression.exe
 ```
 
-Xem `VALIDATION.md` cho kết quả và manual acceptance. Chưa kiểm thử extraction với RVT thật trong Revit tương tác; cần xác nhận trước khi dùng trên dự án. Phase 3 highlighting/restore overrides chưa triển khai.
+Xem `VALIDATION.md` cho kết quả và manual acceptance. Chưa kiểm thử extraction với RVT thật trong Revit tương tác; cần xác nhận trước khi dùng trên dự án. Phase 3 đã triển khai; native integration checks cần chạy trong Revit theo hướng dẫn bên dưới.
+
+
+## Sử dụng Phase 3: Highlight và Clear
+
+1. Mở đúng Model B revision và chọn plan, section hoặc 3D view hỗ trợ graphics overrides. So sánh RVT/JSON như trước; không phải export lại JSON chỉ để dùng Highlight.
+2. Trong dashboard bấm **Highlight all changes**. Nút này dùng toàn bộ kết quả so sánh, không chỉ các dòng đang lọc/search. Các highlights trước đó do tool tạo trong active view được restore trước khi áp dụng bộ kết quả mới, tránh để sót màu của lần so sánh cũ.
+3. Hoặc chọn một dòng Added/Modified rồi bấm **Highlight selected element**. Cách này bổ sung một element vào bộ highlight hiện tại, giữ original override từ lần đầu; không ghi đè backup bằng màu highlight của lần trước.
+4. Bấm **Close and inspect view** để đóng modal dashboard và xem model. Mở lại CompareModelsCommand sẽ hiện kết quả gần nhất của phiên Revit.
+5. Bấm **Clear Highlights** trên Ribbon, chạy **ClearHighlightsCommand** bằng Add-In Manager, hoặc dùng nút trong dashboard. Clear chỉ khôi phục các element do tool đã highlight trong **active view**, không xóa toàn bộ user-defined overrides của view và không cần còn comparison report.
+
+Màu mặc định: Added xanh lá, Modified vàng. Unchanged không có override. Bật **Classify modified colors** để GeometryChanged cam, LocationChanged/RotationChanged xanh dương, MEPSystemChanged tím. Một element chỉ có một màu: ưu tiên geometry > location/rotation > MEP system > vàng cho các thay đổi còn lại. Ribbon HighlightChangesCommand dùng màu mặc định; dashboard có tùy chọn classification.
+
+**Deleted:** không tồn tại trong Model B nên không đặt override đỏ lên một element khác có integer ID giống nó. Tool báo số Deleted và giữ chi tiết trong report/source model. Chưa tạo temporary comparison geometry và chưa có source-model highlighting.
+
+### Khôi phục graphics
+
+Trước khi tô, tool lấy `View.GetElementOverrides`, lưu tất cả editable properties của OverrideGraphicSettings Revit 2023 (line colors/patterns/weights, cut/surface foreground/background fill colors/patterns/visibility, transparency, halftone, detail level). Highlight bắt đầu từ bản copy của current overrides rồi đặt line colors + solid foreground fills, transparency 0 và halftone false. Nếu thiếu drafting solid fill, chỉ tô line colors và hiển thị thông báo.
+
+Backup JSON được gắn vào chính view bằng Extensible Storage schema `20B00BB2-DBB3-4864-B80C-DB09EB227D8B`, map theo element UniqueId. Graphics changes và backup nằm trong cùng transaction. Clear đọc backup, restore đầy đủ original state rồi xóa entity trong cùng transaction. Nếu thao tác thất bại, transaction rollback; không bỏ backup sau một lần restore chưa thành công. Nếu element đã bị xóa, bỏ qua và báo missing; không tìm phần tử thay thế bằng integer ID.
+
+Backup không phụ thuộc instance HighlightService hoặc Session.LastReport. Nếu người dùng save model trong lúc đang highlight, backup và màu highlight được save cùng view; có thể đóng/mở lại file và dùng Clear. Tool không tự save hoặc synchronize model. Undo/Redo của transaction cũng tác động đồng thời màu và backup. Mỗi view có recovery data riêng; muốn Clear ở view khác phải chuyển sang view đó rồi chạy Clear.
+
+Lưu ý vận hành:
+
+- Highlight/Clear là thay đổi view trong Model B và sẽ đánh dấu document modified. Cần quyền sửa/borrow view và elements theo Revit; read-only/unsupported view bị từ chối. Lỗi permission hoặc SetElementOverrides làm rollback cả batch, không để batch nửa chừng.
+- Màu ban đầu nghĩa là element overrides **trước lần highlight đầu tiên đang được theo dõi**. Nếu chỉnh tay overrides của cùng element trong lúc đang highlight, Clear vẫn restore backup ban đầu, không giữ chỉnh sửa tạm đó. Category/filter/material settings không bị sửa.
+- Hidden elements, category visibility, section box, phase/design-option visibility, view template, visual style, occlusion và temporary view modes có thể khiến không nhìn thấy màu. Tool không unhide hoặc thay các setting này. Số Highlighted là số overrides đã áp dụng, không đảm bảo mọi element đang xuất hiện trên màn hình. Revit selection có thể che màu highlight; bỏ selection để xem.
+- Full override recovery giữ các pattern ElementIds của document. Nếu pattern được xóa sau khi highlight, restore có thể thất bại và transaction giữ nguyên backup; không tự thay original pattern bằng pattern khác. Clear trước khi xóa patterns hoặc dùng Undo để khôi phục pattern bị xóa.
+- Schema snapshot vẫn là 2.0 vì Phase 3 không đổi dữ liệu model export. Recovery schema của graphics độc lập với snapshot schema. Giới hạn nhận diện đúng revision B của ProjectInformation.UniqueId vẫn áp dụng.
+
+### Native integration test tùy chọn
+
+Build có thêm **BimComparison.Commands.ValidateHighlightsCommand** để chạy bằng Add-In Manager; không đặt trên Ribbon sản phẩm. Mở model thử nghiệm, active view hỗ trợ overrides, chọn một model element rồi chạy command. Nó tạo original overrides có màu/transparency/halftone/lineweight tùy chỉnh, kiểm tra Highlight thay đổi màu, highlight lặp không mất original, Clear restore đầy đủ, Clear lặp không tác động, và replace bằng result rỗng dọn màu cũ. Các thao tác được bọc TransactionGroup và rollback toàn bộ, kể cả trạng thái highlight đã có trước test.
+
+Command test đã compile nhưng **chưa được chạy trong Revit trong phiên phát triển này**. Save/close/reopen, Undo/Redo, nhiều view và quyền worksharing cần xác nhận thủ công theo VALIDATION.md.

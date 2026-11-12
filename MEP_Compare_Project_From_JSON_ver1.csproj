@@ -5,7 +5,7 @@
   <EnableDefaultCompileItems>false</EnableDefaultCompileItems><EnableDefaultPageItems>false</EnableDefaultPageItems>
  </PropertyGroup>
  <ItemGroup>
-  <Compile Include="App.cs;Commands\*.cs;Core\*.cs;Extraction\*.cs;UI\*.cs;Properties\AssemblyInfo.cs"/><Page Include="UI\ComparisonWindow.xaml"/>
+  <Compile Include="App.cs;Commands\*.cs;Core\*.cs;Extraction\*.cs;Visualization\*.cs;UI\*.cs;Properties\AssemblyInfo.cs"/><Page Include="UI\ComparisonWindow.xaml"/>
   <Reference Include="RevitAPI"><HintPath>$(RevitInstallDir)\RevitAPI.dll</HintPath><Private>false</Private></Reference>
   <Reference Include="RevitAPIUI"><HintPath>$(RevitInstallDir)\RevitAPIUI.dll</HintPath><Private>false</Private></Reference>
   <Reference Include="Newtonsoft.Json"><HintPath>$(RevitInstallDir)\Newtonsoft.Json.dll</HintPath><Private>false</Private></Reference>

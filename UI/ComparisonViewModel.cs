@@ -37,6 +37,7 @@ namespace BimComparison.UI
         public bool CompareGeometry {get;set;}=true;
         public bool CompareMep {get;set;}=true;
         public bool CompareConnectors {get;set;}=true;
+        public bool ClassifyHighlightColors {get;set;}
         public string GeometryMode {get;set;}="Detailed";
         public string[] GeometryModes {get;}={"Lightweight","Detailed"};
         public string AreaTolerance {get;set;}="0.00001";

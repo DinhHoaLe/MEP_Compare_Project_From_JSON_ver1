@@ -1,4 +1,4 @@
-# Validation — Phase 2
+# Validation — Phase 3
 
 Target: Revit 2023, .NET Framework 4.8, x64. Build bằng DLL Revit 2023 đang cài trên máy, không dùng API giả. Core tests không load Revit runtime; UI regression chạy STA với WPF CollectionView thật, không mở Revit UI.
 
@@ -62,4 +62,28 @@ Chưa có cặp RVT thử nghiệm được cung cấp và chưa chạy extracti
 11. Test select/zoom/report JSON/CSV, search classification, rerun comparison trên cùng dashboard, Cancel JSON và closing khi task đang chạy.
 12. Profile RVT thật: thời gian geometry extraction, memory Detailed snapshot/report, UI rendering; synthetic 100k test không thay thế bước này.
 
-Highlight/Clear thuộc Phase 3 và chưa có trong build này.
+Highlight/Clear đã có trong Phase 3; native acceptance bổ sung bên dưới.
+
+
+## Phase 3 validation
+
+Release solution build: 0 errors / 0 warnings. Core **51/51** checks passed, gồm 43 checks trước và 8 color-policy checks mới. Color tests bao gồm Added/Deleted/Unchanged, Modified mặc định, classification priority và toggle. Đây không phải native graphics/transaction test.
+
+Optional `ValidateHighlightsCommand` được build với RevitAPI 2023 thật, bao gồm 4 native checks chạy trong TransactionGroup rồi rollback: actual override thay đổi, repeated highlight + full original recovery qua service instance mới, repeated Clear no-op, replacement empty result phục hồi stale colors. Command **chưa được chạy** trong Revit tương tác trong phiên phát triển này.
+
+Manual acceptance cần thực hiện:
+
+1. Plan/section/3D: Added xanh, Modified vàng; classification cam/xanh dương/tím theo priority. Kiểm tra projection và cut fills/line colors. Deselect element trước khi đánh giá màu.
+2. Trước highlight, đặt overrides riêng gồm custom color, line pattern/weight, cut/surface foreground/background fill pattern + visibility, transparency, halftone, detail level. Highlight → Clear phải khôi phục tất cả properties, không chỉ màu.
+3. Highlight row nhiều lần, thay classification, rồi Highlight all một comparison khác: original backup không được thành màu highlight và không còn stale overrides của comparison cũ.
+4. Highlight trong hai view, Clear từng view phải độc lập. Unchanged/unrelated elements phải giữ overrides riêng. Search/filter không thu hẹp Highlight all.
+5. Save khi đang highlight → close/reopen → ClearHighlightsCommand không cần report phải restore. Tool không tự save/sync. Sau Clear, save rồi reopen không còn recovery entity của view đó.
+6. Undo/Redo Highlight/Clear: colors và backup phải đồng bộ, Clear sau Undo/Redo vẫn có đúng dữ liệu.
+7. Xóa element đang highlight → Clear: báo missing, không restore nhầm element mới. Deleted của comparison chỉ report, không tô nhầm model B.
+8. Read-only model, view không hỗ trợ override, view/element không có quyền worksharing: thất bại phải rollback toàn bộ; dữ liệu recovery trước đó không mất.
+9. Hide/category/phase/section box/visual style/selection: tool không đổi visibility để cưỡng ép hiện màu. Highlight count là overrides applied.
+10. Chỉnh tay override khi đang highlight → Clear phải trở về trạng thái trước lần highlight đầu. Xóa referenced pattern sau highlight có thể làm restore thất bại; giữ backup và không tự bỏ original pattern.
+11. Add-In Manager chạy CompareModelsCommand rồi dùng các nút Highlight/Clear ngay trong cùng dashboard. Ribbon cố định cần cài Application manifest và restart Revit.
+12. Chạy ValidateHighlightsCommand trên model thử; xác nhận thông báo 4 checks passed và không còn test modifications sau rollback.
+
+Chưa có runtime acceptance với RVT thật. Không kết luận khả năng restore đã được kiểm chứng trong Revit chỉ từ build và color-policy tests.

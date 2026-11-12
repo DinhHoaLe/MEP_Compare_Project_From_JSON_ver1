@@ -67,6 +67,7 @@ internal static class Program
             var watch=System.Diagnostics.Stopwatch.StartNew();var big=engine.Compare(large,large,large.Settings);watch.Stop();
             Check(big.UnchangedElements.Count==100000,"100,000-element comparison ("+watch.ElapsedMilliseconds+" ms)");
             Phase2Tests.Run(Check,Path.Combine(folder,"Phase2"));
+            Phase3Tests.Run(Check);
             Console.WriteLine(passed+" tests passed.");return 0;
         }
         catch(Exception ex){Console.Error.WriteLine(ex);return 1;}
