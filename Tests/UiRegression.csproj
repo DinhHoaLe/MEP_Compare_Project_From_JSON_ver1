@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+ <PropertyGroup><TargetFramework>net48</TargetFramework><UseWPF>true</UseWPF><OutputType>Exe</OutputType><PlatformTarget>x64</PlatformTarget><EnableDefaultCompileItems>false</EnableDefaultCompileItems><RevitInstallDir Condition="'$(RevitInstallDir)' == ''">C:\Program Files\Autodesk\Revit 2023</RevitInstallDir></PropertyGroup>
+ <ItemGroup>
+  <Compile Include="UiRegression.cs"/>
+  <ProjectReference Include="..\MEP_Compare_Project_From_JSON_ver1.csproj"/>
+  <Reference Include="Newtonsoft.Json"><HintPath>$(RevitInstallDir)\Newtonsoft.Json.dll</HintPath><Private>true</Private></Reference>
+ </ItemGroup>
+</Project>

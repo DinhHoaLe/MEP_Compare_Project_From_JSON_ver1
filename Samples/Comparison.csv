@@ -1,0 +1,7 @@
+﻿Status,ElementId,UniqueId,Category,Family,Type,ChangeType,Property,OldValue,NewValue,Unit
+"Added","4","added","Pipes","Pipe","Standard","","","","",""
+"Deleted","2","deleted","Pipes","Pipe","Standard","","","","",""
+"Modified","1","stable","Pipes","Pipe","Standard","ParameterChanged","instance:builtin:-1 / Diameter","Double:1 [autodesk.spec.aec:length-2.0.0]","Double:1.5 [autodesk.spec.aec:length-2.0.0]","internal; spec=autodesk.spec.aec:length-2.0.0"
+"Modified","1","stable","Pipes","Pipe","Standard","LocationChanged","Location.Point","1,2,3","5,2,3","ft"
+"Unchanged","3","unchanged","Pipes","Pipe","Standard","","","","",""
+Warning,,,,,,,"Host model only; probable matching is not implemented. Recreated elements remain Added/Deleted. Geometry is compared in internal world coordinates; movement may also be GeometryChanged.",,,

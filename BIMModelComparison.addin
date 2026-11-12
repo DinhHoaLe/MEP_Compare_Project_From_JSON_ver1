@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+ <AddIn Type="Application">
+  <Name>BIM Model Comparison</Name>
+  <Assembly>MEP_Compare_Project_From_JSON_ver1.dll</Assembly>
+  <AddInId>66044E6E-CA36-48B5-AD76-6AD9C222BDA8</AddInId>
+  <FullClassName>BimComparison.App</FullClassName>
+  <VendorId>BIMC</VendorId>
+  <VendorDescription>BIM Model Comparison Phase 2</VendorDescription>
+ </AddIn>
+</RevitAddIns>

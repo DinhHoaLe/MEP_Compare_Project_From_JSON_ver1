@@ -1,0 +1,140 @@
+{
+  "SchemaVersion": "1.0",
+  "Scope": "Phase1-Identity-Parameters-Location",
+  "ModelName": "RevisionB",
+  "ModelPath": "RevisionB.rvt",
+  "ProjectUniqueId": "same-project",
+  "RevitVersion": "2023",
+  "ExportedUtc": "2026-11-12T09:09:36.6451672Z",
+  "Settings": {
+    "Categories": [
+      -2008044
+    ],
+    "Parameters": true,
+    "Location": true,
+    "Geometry": false,
+    "Mep": false,
+    "Connectors": false,
+    "GeometryMode": "Detailed",
+    "AreaToleranceSquareFeet": 1E-05,
+    "VolumeToleranceCubicFeet": 1E-06,
+    "LengthToleranceFeet": 0.0032808398950131233,
+    "NumberTolerance": 1E-08,
+    "AngleToleranceRadians": 1E-06
+  },
+  "Elements": [
+    {
+      "UniqueId": "stable",
+      "ElementId": 1,
+      "CategoryId": -2008044,
+      "Category": "Pipes",
+      "Family": "Pipe",
+      "Type": "Standard",
+      "TypeUniqueId": "pipe-type",
+      "Workset": null,
+      "DesignOption": null,
+      "CreatedPhase": null,
+      "DemolishedPhase": null,
+      "Parameters": [
+        {
+          "Key": "instance:builtin:-1",
+          "Name": "Diameter",
+          "BuiltInId": null,
+          "Guid": null,
+          "StorageType": "Double",
+          "HasValue": true,
+          "RawValue": "1.5",
+          "DisplayValue": "display",
+          "Spec": "autodesk.spec.aec:length-2.0.0",
+          "Unit": "mm",
+          "IsReadOnly": false
+        },
+        {
+          "Key": "instance:shared:guid",
+          "Name": "Diameter",
+          "BuiltInId": null,
+          "Guid": null,
+          "StorageType": "Double",
+          "HasValue": true,
+          "RawValue": "2",
+          "DisplayValue": "display",
+          "Spec": "autodesk.spec.aec:length-2.0.0",
+          "Unit": "mm",
+          "IsReadOnly": false
+        }
+      ],
+      "Location": {
+        "Kind": "Point",
+        "Point": {
+          "X": 5.0,
+          "Y": 2.0,
+          "Z": 3.0
+        },
+        "Start": null,
+        "End": null,
+        "Rotation": 0.0
+      },
+      "Geometry": null,
+      "Mep": null,
+      "Connectors": null
+    },
+    {
+      "UniqueId": "unchanged",
+      "ElementId": 3,
+      "CategoryId": -2008044,
+      "Category": "Pipes",
+      "Family": "Pipe",
+      "Type": "Standard",
+      "TypeUniqueId": "pipe-type",
+      "Workset": null,
+      "DesignOption": null,
+      "CreatedPhase": null,
+      "DemolishedPhase": null,
+      "Parameters": [],
+      "Location": {
+        "Kind": "Point",
+        "Point": {
+          "X": 1.0,
+          "Y": 2.0,
+          "Z": 3.0
+        },
+        "Start": null,
+        "End": null,
+        "Rotation": 0.0
+      },
+      "Geometry": null,
+      "Mep": null,
+      "Connectors": null
+    },
+    {
+      "UniqueId": "added",
+      "ElementId": 4,
+      "CategoryId": -2008044,
+      "Category": "Pipes",
+      "Family": "Pipe",
+      "Type": "Standard",
+      "TypeUniqueId": "pipe-type",
+      "Workset": null,
+      "DesignOption": null,
+      "CreatedPhase": null,
+      "DemolishedPhase": null,
+      "Parameters": [],
+      "Location": {
+        "Kind": "Point",
+        "Point": {
+          "X": 1.0,
+          "Y": 2.0,
+          "Z": 3.0
+        },
+        "Start": null,
+        "End": null,
+        "Rotation": 0.0
+      },
+      "Geometry": null,
+      "Mep": null,
+      "Connectors": null
+    }
+  ],
+  "Warnings": [],
+  "ExtractionErrors": []
+}

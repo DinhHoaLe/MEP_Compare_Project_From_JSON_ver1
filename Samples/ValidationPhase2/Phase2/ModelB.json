@@ -1,0 +1,197 @@
+{
+  "SchemaVersion": "2.0",
+  "Scope": "Phase2-Geometry-MEP-Connectors",
+  "ModelName": null,
+  "ModelPath": "Phase2_B.rvt",
+  "ProjectUniqueId": "project",
+  "RevitVersion": null,
+  "ExportedUtc": "2026-11-12T09:08:44.0641965Z",
+  "Settings": {
+    "Categories": [
+      -2008044
+    ],
+    "Parameters": true,
+    "Location": true,
+    "Geometry": true,
+    "Mep": true,
+    "Connectors": true,
+    "GeometryMode": "Detailed",
+    "AreaToleranceSquareFeet": 1E-05,
+    "VolumeToleranceCubicFeet": 1E-06,
+    "LengthToleranceFeet": 0.0032808398950131233,
+    "NumberTolerance": 1E-08,
+    "AngleToleranceRadians": 1E-06
+  },
+  "Elements": [
+    {
+      "UniqueId": "pipe",
+      "ElementId": 10,
+      "CategoryId": -2008044,
+      "Category": "Pipes",
+      "Family": null,
+      "Type": null,
+      "TypeUniqueId": null,
+      "Workset": null,
+      "DesignOption": null,
+      "CreatedPhase": null,
+      "DemolishedPhase": null,
+      "Parameters": [],
+      "Location": null,
+      "Geometry": {
+        "Status": "Complete",
+        "Mode": "Detailed",
+        "Algorithm": "world-triangles-fine-v1",
+        "Fingerprint": null,
+        "Minimum": {
+          "X": 0.0,
+          "Y": 0.0,
+          "Z": 0.0
+        },
+        "Maximum": {
+          "X": 2.0,
+          "Y": 2.0,
+          "Z": 2.0
+        },
+        "Center": {
+          "X": 1.0,
+          "Y": 1.0,
+          "Z": 1.0
+        },
+        "Volume": 1.0,
+        "SurfaceArea": 6.0,
+        "CurveLength": 0.0,
+        "SolidCount": 1,
+        "MeshCount": 0,
+        "CurveCount": 0,
+        "Triangles": [
+          {
+            "A": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "B": {
+              "X": 1.1,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "C": {
+              "X": 0.0,
+              "Y": 1.0,
+              "Z": 0.0
+            }
+          },
+          {
+            "A": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "B": {
+              "X": 1.0,
+              "Y": 0.0,
+              "Z": 1.0
+            },
+            "C": {
+              "X": 0.0,
+              "Y": 1.0,
+              "Z": 1.0
+            }
+          }
+        ],
+        "Curves": [
+          [
+            {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            {
+              "X": 1.0,
+              "Y": 1.0,
+              "Z": 0.0
+            },
+            {
+              "X": 2.0,
+              "Y": 0.0,
+              "Z": 0.0
+            }
+          ]
+        ],
+        "Errors": []
+      },
+      "Mep": {
+        "Status": "Complete",
+        "Systems": [
+          {
+            "UniqueId": "system-a",
+            "Name": "Changed supply",
+            "TypeUniqueId": "supply-type",
+            "TypeName": null
+          },
+          {
+            "UniqueId": "system-b",
+            "Name": "Return",
+            "TypeUniqueId": "return-type",
+            "TypeName": null
+          }
+        ],
+        "Dimensions": {
+          "PipeDiameter": 0.2,
+          "Length": 2.0
+        },
+        "Errors": []
+      },
+      "Connectors": {
+        "Status": "Complete",
+        "Items": [
+          {
+            "Domain": "DomainPiping",
+            "Type": "End",
+            "Shape": "Round",
+            "Origin": {
+              "X": 0.0,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "Direction": {
+              "X": 1.0,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "Radius": 0.1,
+            "Width": null,
+            "Height": null,
+            "References": [
+              "replacement-fitting"
+            ]
+          },
+          {
+            "Domain": "DomainPiping",
+            "Type": "End",
+            "Shape": "Round",
+            "Origin": {
+              "X": 2.0,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "Direction": {
+              "X": 1.0,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "Radius": 0.1,
+            "Width": null,
+            "Height": null,
+            "References": [
+              "fitting-b|DomainPiping|End"
+            ]
+          }
+        ],
+        "Errors": []
+      }
+    }
+  ],
+  "Warnings": [],
+  "ExtractionErrors": []
+}

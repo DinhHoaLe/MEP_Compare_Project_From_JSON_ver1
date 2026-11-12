@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><TargetFramework>net48</TargetFramework><OutputType>Exe</OutputType><LangVersion>7.3</LangVersion><EnableDefaultCompileItems>false</EnableDefaultCompileItems><RevitInstallDir Condition="'$(RevitInstallDir)' == ''">C:\Program Files\Autodesk\Revit 2023</RevitInstallDir></PropertyGroup>
+ <ItemGroup>
+  <Compile Include="Program.cs;Phase2Tests.cs;..\Core\*.cs"/>
+  <Reference Include="Newtonsoft.Json"><HintPath>$(RevitInstallDir)\Newtonsoft.Json.dll</HintPath><Private>true</Private></Reference>
+ </ItemGroup>
+</Project>

@@ -1,0 +1,208 @@
+{
+  "ComparisonId": "7a9bd89a-fc46-45af-a438-406361186b81",
+  "TimestampUtc": "2026-11-12T09:08:43.7567007Z",
+  "ModelA": "RevisionA.rvt",
+  "ModelB": "RevisionB.rvt",
+  "ProjectA": "same-project",
+  "ProjectB": "same-project",
+  "Settings": {
+    "Categories": [
+      -2008044
+    ],
+    "Parameters": true,
+    "Location": true,
+    "Geometry": false,
+    "Mep": false,
+    "Connectors": false,
+    "GeometryMode": "Detailed",
+    "AreaToleranceSquareFeet": 1E-05,
+    "VolumeToleranceCubicFeet": 1E-06,
+    "LengthToleranceFeet": 0.0032808398950131233,
+    "NumberTolerance": 1E-08,
+    "AngleToleranceRadians": 1E-06
+  },
+  "TotalA": 3,
+  "TotalB": 3,
+  "AddedElements": [
+    {
+      "Status": "Added",
+      "Element": {
+        "UniqueId": "added",
+        "ElementId": 4,
+        "CategoryId": -2008044,
+        "Category": "Pipes",
+        "Family": "Pipe",
+        "Type": "Standard",
+        "TypeUniqueId": "pipe-type",
+        "Workset": null,
+        "DesignOption": null,
+        "CreatedPhase": null,
+        "DemolishedPhase": null,
+        "Parameters": [],
+        "Location": {
+          "Kind": "Point",
+          "Point": {
+            "X": 1.0,
+            "Y": 2.0,
+            "Z": 3.0
+          },
+          "Start": null,
+          "End": null,
+          "Rotation": 0.0
+        },
+        "Geometry": null,
+        "Mep": null,
+        "Connectors": null
+      },
+      "Changes": []
+    }
+  ],
+  "DeletedElements": [
+    {
+      "Status": "Deleted",
+      "Element": {
+        "UniqueId": "deleted",
+        "ElementId": 2,
+        "CategoryId": -2008044,
+        "Category": "Pipes",
+        "Family": "Pipe",
+        "Type": "Standard",
+        "TypeUniqueId": "pipe-type",
+        "Workset": null,
+        "DesignOption": null,
+        "CreatedPhase": null,
+        "DemolishedPhase": null,
+        "Parameters": [],
+        "Location": {
+          "Kind": "Point",
+          "Point": {
+            "X": 1.0,
+            "Y": 2.0,
+            "Z": 3.0
+          },
+          "Start": null,
+          "End": null,
+          "Rotation": 0.0
+        },
+        "Geometry": null,
+        "Mep": null,
+        "Connectors": null
+      },
+      "Changes": []
+    }
+  ],
+  "ModifiedElements": [
+    {
+      "Status": "Modified",
+      "Element": {
+        "UniqueId": "stable",
+        "ElementId": 1,
+        "CategoryId": -2008044,
+        "Category": "Pipes",
+        "Family": "Pipe",
+        "Type": "Standard",
+        "TypeUniqueId": "pipe-type",
+        "Workset": null,
+        "DesignOption": null,
+        "CreatedPhase": null,
+        "DemolishedPhase": null,
+        "Parameters": [
+          {
+            "Key": "instance:builtin:-1",
+            "Name": "Diameter",
+            "BuiltInId": null,
+            "Guid": null,
+            "StorageType": "Double",
+            "HasValue": true,
+            "RawValue": "1.5",
+            "DisplayValue": "display",
+            "Spec": "autodesk.spec.aec:length-2.0.0",
+            "Unit": "mm",
+            "IsReadOnly": false
+          },
+          {
+            "Key": "instance:shared:guid",
+            "Name": "Diameter",
+            "BuiltInId": null,
+            "Guid": null,
+            "StorageType": "Double",
+            "HasValue": true,
+            "RawValue": "2",
+            "DisplayValue": "display",
+            "Spec": "autodesk.spec.aec:length-2.0.0",
+            "Unit": "mm",
+            "IsReadOnly": false
+          }
+        ],
+        "Location": {
+          "Kind": "Point",
+          "Point": {
+            "X": 5.0,
+            "Y": 2.0,
+            "Z": 3.0
+          },
+          "Start": null,
+          "End": null,
+          "Rotation": 0.0
+        },
+        "Geometry": null,
+        "Mep": null,
+        "Connectors": null
+      },
+      "Changes": [
+        {
+          "ChangeType": "ParameterChanged",
+          "Property": "instance:builtin:-1 / Diameter",
+          "OldValue": "Double:1 [autodesk.spec.aec:length-2.0.0]",
+          "NewValue": "Double:1.5 [autodesk.spec.aec:length-2.0.0]",
+          "Unit": "internal; spec=autodesk.spec.aec:length-2.0.0"
+        },
+        {
+          "ChangeType": "LocationChanged",
+          "Property": "Location.Point",
+          "OldValue": "1,2,3",
+          "NewValue": "5,2,3",
+          "Unit": "ft"
+        }
+      ]
+    }
+  ],
+  "UnchangedElements": [
+    {
+      "Status": "Unchanged",
+      "Element": {
+        "UniqueId": "unchanged",
+        "ElementId": 3,
+        "CategoryId": -2008044,
+        "Category": "Pipes",
+        "Family": "Pipe",
+        "Type": "Standard",
+        "TypeUniqueId": "pipe-type",
+        "Workset": null,
+        "DesignOption": null,
+        "CreatedPhase": null,
+        "DemolishedPhase": null,
+        "Parameters": [],
+        "Location": {
+          "Kind": "Point",
+          "Point": {
+            "X": 1.0,
+            "Y": 2.0,
+            "Z": 3.0
+          },
+          "Start": null,
+          "End": null,
+          "Rotation": 0.0
+        },
+        "Geometry": null,
+        "Mep": null,
+        "Connectors": null
+      },
+      "Changes": []
+    }
+  ],
+  "Warnings": [
+    "Host model only; probable matching is not implemented. Recreated elements remain Added/Deleted. Geometry is compared in internal world coordinates; movement may also be GeometryChanged."
+  ],
+  "ExtractionErrors": []
+}
