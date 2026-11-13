@@ -1,0 +1,1 @@
+Verified point-to-triangle interior and vertex cases. Analytic duct surface samples agree with extracted RVT tessellation within 0.2671681437641382 mm. Tessellation precision limits near-zero residuals. No whole-surface equivalence certification.
